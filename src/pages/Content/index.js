@@ -1,6 +1,18 @@
-import { printLine } from './modules/print';
-
 console.log('Content script works!');
-console.log('Must reload extension for modifications to take effect.');
 
-printLine("Using the 'printLine' function from the Print Module");
+document.addEventListener('keyup', (event) => {
+  console.log(
+    event.type,
+    'at ',
+    event.target.className,
+    document.getElementsByClassName(event.target.className)[0].value
+  );
+});
+
+Object.keys(window).forEach((key) => {
+  if (/^on/.test(key)) {
+    window.addEventListener(key.slice(2), (event) => {
+      console.log(key, 'at ' + event.target.className);
+    });
+  }
+});
